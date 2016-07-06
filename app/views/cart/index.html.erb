@@ -1,0 +1,21 @@
+<h2>Cart</h2>
+<% if @cart.empty? %>
+	KOSONG
+<% else %>
+<%= link_to "empty cart", cart_clear_path %>
+<% total = 0 %>
+<% end %>
+
+<ul>
+<% @cart.each do | id, quantity | %>
+	<% product = Product.find_by_id(id) %>
+		<li>
+		<%= link_to product.title, product %>
+		<%= product.description %>
+		<%= number_to_currency(product.price, unit: '$') %>
+		Quantity : <%= quantity %>
+	</li>
+		<% total += quantity * product.price %>
+<% end %>
+<%= number_to_currency(total, unit: '$') %>
+</ul>
